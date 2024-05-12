@@ -3,6 +3,8 @@
 #
 # @author Jeff Geerling
 #
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
 # Colors.
 unset LSCOLORS
@@ -22,18 +24,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-HIST_STAMPS="dd-mm-yyyy"
-UPDATE_ZSH_DAYS="7"
-COMPLETION_WAITING_DOTS="true"
 
 # Enable plugins.
-plugins=(sudo ansible autojump git git-auto-fetch python pip command-not-found colored-man-pages brew history docker zsh-users/zsh-syntax-highlighting zsh-users/zsh-autosuggestions history-substring-search)
+plugins=(brew ansible git colorize python pip command-not-found colored-man-pages history docker history-substring-search)
 
 
 # Custom $PATH with extra locations.
-export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:/usr/local/git/bin:$PATH"
-export TERM="xterm-256color"
-source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+export PATH="/opt/homebrew/bin:/usr/sbin:$(brew --prefix)/opt/python@3/libexec/bin:/usr/local/bin:/usr/bin:/sbin:/usr/local/sbin:$HOME/bin:/bin:/usr/local/git/bin:$PATH"
 
 # Bash-style time output.
 export TIMEFMT=$'\nreal\t%*E\nuser\t%*U\nsys\t%*S'
@@ -147,3 +144,8 @@ export COMPOSER_MEMORY_LIMIT=-1
 #}
 #shopt -s extdebug
 #trap prod_command_trap DEBUG
+
+source $ZSH/oh-my-zsh.sh
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
