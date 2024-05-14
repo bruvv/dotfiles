@@ -26,7 +26,7 @@ fi
 
 
 # Enable plugins.
-plugins=(brew ansible git colorize python pip command-not-found colored-man-pages history docker history-substring-search)
+plugins=(autoswitch_virtualenv brew ansible git colorize python pip command-not-found colored-man-pages history docker history-substring-search)
 
 
 # Custom $PATH with extra locations.
