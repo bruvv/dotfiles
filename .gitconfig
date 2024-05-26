@@ -1,34 +1,36 @@
 [user]
-  name = Jeff Geerling
-  email = geerlingguy@mac.com
+name = Bruvv
+email = nvoorn@gmail.com
 [core]
-  editor = vi
-  excludesfile = ~/.gitignore
-  autocrlf = input
+editor = vi
+excludesfile = ~/.gitignore_global
+autocrlf = input
 [color]
-  branch = auto
-  diff = auto
-  interactive = auto
-  status = auto
+branch = auto
+diff = auto
+interactive = auto
+status = auto
 [init]
-  defaultBranch = master
+defaultBranch = main
 [web]
-  browser = google-chrome
+browser = google-chrome
 [credential]
-  helper = osxkeychain
+helper = osxkeychain
 [push]
-  default = simple
+default = simple
 [merge]
-  tool = kdiff3
+tool = kdiff3
 [difftool]
-  prompt = false
+prompt = false
 [alias]
-  c = commit
-  ca = commit -a
-  cm = commit -m
-  cam = commit -am
-  d = diff
-  dc = diff --cached
-  l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
+c = commit
+ca = commit -a
+cm = commit -m
+cam = commit -am
+d = diff
+dc = diff --cached
+l = log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit
 [pull]
-	rebase = true
+rebase = false
+[includeIf "gitdir:/Users/niels/Documents/scripts/unive/"]
+path = .gitconfig-unive
