@@ -3,7 +3,7 @@
   email = nvoorn@gmail.com
 [core]
   editor = vi
-  excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore
   autocrlf = input
 [color]
   branch = auto
