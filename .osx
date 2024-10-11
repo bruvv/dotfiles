@@ -40,8 +40,8 @@ fi
 # General UI/UX                                                               #
 ###############################################################################
 
-# Disable itunes mediakeys
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
+# Disable alle mediakeys
+# launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
 
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
