@@ -9,7 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # Colors.
 unset LSCOLORS
 export CLICOLOR=1
-export CLICOLOR_FORCE=1
+# export CLICOLOR_FORCE=1
 
 # Don't require escaping globbing characters in zsh.
 unsetopt nomatch
