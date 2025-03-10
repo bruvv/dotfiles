@@ -66,25 +66,6 @@ autoload -Uz compinit && compinit
 # Case insensitive.
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
 
-# Git upstream branch syncer.
-# Usage: gsync master (checks out master, pull upstream, push origin).
-function gsync() {
-  if [[ ! "$1" ]]; then
-    echo "You must supply a branch."
-    return 0
-  fi
-
-  BRANCHES=$(git branch --list $1)
-  if [ ! "$BRANCHES" ]; then
-    echo "Branch $1 does not exist."
-    return 0
-  fi
-
-  git checkout "$1" &&
-  git pull upstream "$1" &&
-  git push origin "$1"
-}
-
 # Tell homebrew to not autoupdate every single time I run it (just once a week).
 export HOMEBREW_AUTO_UPDATE_SECS=604800
 
