@@ -26,8 +26,7 @@ fi
 
 
 # Enable plugins.
-plugins=(autoswitch_virtualenv brew ansible git colorize python pip command-not-found colored-man-pages history docker history-substring-search)
-
+plugins=(autoswitch_virtualenv macos brew ansible git git-auto-fetch git-commit git-lfs git-prompt colored-man-pages colorize common-aliases emoji emoji-clock fancy-ctrl-z python pip ssh vscode ssh-agent sudo command-not-found colored-man-pages history iterm2 podman history-substring-search)
 
 # Custom $PATH with extra locations.
 export PATH="/opt/homebrew/bin:/usr/sbin:$(brew --prefix)/opt/python@3/libexec/bin:/usr/local/bin:/usr/bin:/sbin:/usr/local/sbin:$HOME/bin:/bin:/usr/local/git/bin:$PATH"
