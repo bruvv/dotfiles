@@ -92,8 +92,8 @@ defaults write NSGlobalDomain KeyRepeat -int 1
 # Screen                                                                      #
 ###############################################################################
 
-# Use the default screenshot location.
-defaults delete com.apple.screencapture location 2>/dev/null || true
+# Save screenshots to Downloads folder.
+defaults write com.apple.screencapture location -string "${HOME}/Downloads"
 
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 defaults write com.apple.screencapture type -string "png"
@@ -266,8 +266,8 @@ defaults write com.apple.ActivityMonitor ShowCategory -int 100
 # App Store                                                                   #
 ###############################################################################
 
-# Use the default in-app rating request behavior.
-defaults delete com.apple.appstore InAppReviewEnabled 2>/dev/null || true
+# Disable in-app rating requests from apps downloaded from the App Store.
+defaults write com.apple.appstore InAppReviewEnabled -int 0
 
 ###############################################################################
 # Kill/restart affected applications                                          #
