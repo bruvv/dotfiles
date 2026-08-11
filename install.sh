@@ -19,6 +19,7 @@ check_configuration() {
   /bin/bash -n "${script_dir}/install.sh"
   /bin/bash -n "${script_dir}/.osx"
   /bin/zsh -n "${script_dir}/.zshrc"
+  /bin/zsh -n "${script_dir}/.p10k.zsh"
   /usr/bin/vim -Nu "${script_dir}/.vimrc" -n -i NONE -es '+qall!'
   printf "Configuration check passed.\n"
 }
@@ -138,8 +139,9 @@ install_zsh_configuration() {
   mkdir -p "${HOME}/.nvm" "${HOME}/.ssh"
   chmod 700 "${HOME}/.ssh"
   link_dotfile "${script_dir}/.zshrc" "${HOME}/.zshrc"
+  link_dotfile "${script_dir}/.p10k.zsh" "${HOME}/.p10k.zsh"
 
-  printf "Zsh configuration installed. Run 'p10k configure' to choose your prompt appearance.\n"
+  printf "Zsh configuration and Powerlevel10k prompt installed.\n"
 }
 
 install_vim_configuration() {
