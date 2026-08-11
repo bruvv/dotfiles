@@ -2,9 +2,8 @@
 
 # Mac OS X configuration
 #
-# This configuration applies to the latest version of macOS (currently 11.3),
-# and sets up preferences and configurations for all the built-in services and
-# apps. Third-party app config should be done elsewhere.
+# This configuration applies preferences for built-in macOS services and apps.
+# Third-party app config should be done elsewhere.
 #
 # Options:
 #   --no-restart: Don't restart any apps or services after running the script.
@@ -66,15 +65,64 @@ fi
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
 
-# Trackpad: Haptic feedback (light, silent clicking)
-#defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 0
-#defaults write com.apple.AppleMultitouchTrackpad ActuationStrength -int 0
+# Apply the same gestures to the built-in and Bluetooth trackpad
+for trackpad_domain in \
+  com.apple.AppleMultitouchTrackpad \
+  com.apple.driver.AppleBluetoothMultitouch.trackpad; do
+  defaults write "$trackpad_domain" Clicking -bool true
+  defaults write "$trackpad_domain" DragLock -bool false
+  defaults write "$trackpad_domain" Dragging -bool false
+  defaults write "$trackpad_domain" TrackpadCornerSecondaryClick -int 0
+  defaults write "$trackpad_domain" TrackpadFiveFingerPinchGesture -int 2
+  defaults write "$trackpad_domain" TrackpadFourFingerHorizSwipeGesture -int 2
+  defaults write "$trackpad_domain" TrackpadFourFingerPinchGesture -int 2
+  defaults write "$trackpad_domain" TrackpadFourFingerVertSwipeGesture -int 2
+  defaults write "$trackpad_domain" TrackpadHorizScroll -bool true
+  defaults write "$trackpad_domain" TrackpadMomentumScroll -bool true
+  defaults write "$trackpad_domain" TrackpadPinch -bool true
+  defaults write "$trackpad_domain" TrackpadRightClick -bool true
+  defaults write "$trackpad_domain" TrackpadRotate -bool true
+  defaults write "$trackpad_domain" TrackpadScroll -bool true
+  defaults write "$trackpad_domain" TrackpadThreeFingerDrag -bool true
+  defaults write "$trackpad_domain" TrackpadThreeFingerHorizSwipeGesture -int 0
+  defaults write "$trackpad_domain" TrackpadThreeFingerTapGesture -int 0
+  defaults write "$trackpad_domain" TrackpadThreeFingerVertSwipeGesture -int 0
+  defaults write "$trackpad_domain" TrackpadTwoFingerDoubleTapGesture -int 1
+  defaults write "$trackpad_domain" TrackpadTwoFingerFromRightEdgeSwipeGesture -int 3
+  defaults write "$trackpad_domain" USBMouseStopsTrackpad -bool false
+done
 
-# Trackpad: map bottom right corner to right-click (requires restart!)
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-# defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
-defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 0
-# defaults write NSGlobalDomain ContextMenuGesture -int 1
+# Medium click, Force Click, two-finger secondary click, and tap to click
+defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 1
+defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 1
+defaults write com.apple.AppleMultitouchTrackpad ForceSuppressed -bool false
+defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool true
+defaults write NSGlobalDomain com.apple.trackpad.scaling -float 1.5
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool true
+
+# Store the per-host gesture settings used by current macOS releases
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 2
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 2
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerVertSwipeGesture -int 2
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -bool true
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -bool true
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.rotateGesture -bool true
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.scrollBehavior -int 2
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerDragGesture -bool true
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerHorizSwipeGesture -int 0
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerTapGesture -int 2
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerVertSwipeGesture -int 0
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerDoubleTapGesture -int 1
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerFromRightEdgeSwipeGesture -int 3
+
+# Pointer Control: double-click speed, Mouse Keys, and ignore-trackpad setting
+defaults write NSGlobalDomain com.apple.mouse.doubleClickThreshold -float 0.5
+defaults write com.apple.universalaccess mouseDriver -bool false
+defaults write com.apple.universalaccess mouseDriverIgnoreTrackpad -bool false
 
 # Disable press-and-hold for keys in favor of key repeat
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -83,6 +131,16 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 # (The KeyRepeat option requires logging out and back in to take effect.)
 defaults write NSGlobalDomain InitialKeyRepeat -int 20
 defaults write NSGlobalDomain KeyRepeat -int 1
+
+# Keep keyboard navigation off and use the Globe key twice for Dictation
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 0
+defaults write com.apple.HIToolbox AppleFnUsageType -int 3
+defaults write com.apple.HIToolbox AppleDictationAutoEnable -bool true
+
+# Enable Dictation in English (US) and Dutch (Netherlands)
+defaults write com.apple.assistant.support "Dictation Enabled" -bool true
+defaults write com.apple.speech.recognition.AppleSpeechRecognition.prefs \
+  DictationIMPreferredLanguageIdentifiers -array "en_US" "nl_NL"
 
 # Disable auto-correct
 # defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -167,7 +225,26 @@ chflags nohidden ~/Library
 ###############################################################################
 
 # Set the icon size of Dock items
-# defaults write com.apple.dock tilesize -int 30
+defaults write com.apple.dock tilesize -int 52
+
+# Enable Dock magnification and set its maximum icon size
+defaults write com.apple.dock magnification -bool true
+defaults write com.apple.dock largesize -int 108
+
+# Keep the Dock at the bottom of the screen
+defaults write com.apple.dock orientation -string "bottom"
+
+# Use the scale effect when minimizing windows
+defaults write com.apple.dock mineffect -string "scale"
+
+# Zoom a window when double-clicking its title bar
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"
+
+# Minimize windows into their application icon
+defaults write com.apple.dock minimize-to-application -bool true
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
 
 # Speed up Mission Control animations
 # defaults write com.apple.dock expose-animation-duration -float 0.15
@@ -176,11 +253,78 @@ chflags nohidden ~/Library
 defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0.7
 
+# Animate application icons when opening applications
+defaults write com.apple.dock launchanim -bool true
+
+# Show indicators for open applications
+defaults write com.apple.dock show-process-indicators -bool true
+
+# Hide suggested and recent applications in the Dock
+defaults write com.apple.dock show-recents -bool false
+
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
 
 # Enable the 'reduce transparency' option. Save GPU cycles.
 defaults write com.apple.universalaccess reduceTransparency -bool true
+
+###############################################################################
+# Desktop, Stage Manager, widgets, and windows                                #
+###############################################################################
+
+# Show desktop items normally, but hide them in Stage Manager
+defaults write com.apple.WindowManager StandardHideDesktopIcons -bool false
+defaults write com.apple.WindowManager HideDesktop -bool true
+
+# Always reveal the desktop when clicking the wallpaper
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool true
+
+# Disable Stage Manager, but show its recent applications when it is enabled
+defaults write com.apple.WindowManager GloballyEnabled -bool false
+defaults write com.apple.WindowManager AutoHide -bool false
+
+# Show all windows from an application at once in Stage Manager
+defaults write com.apple.WindowManager AppWindowGroupingBehavior -bool true
+
+# Show widgets on the desktop and in Stage Manager, and dim them automatically
+defaults write com.apple.WindowManager StandardHideWidgets -bool false
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool false
+defaults write com.apple.widgets widgetAppearance -int 0
+
+# Safari is already the default browser on a clean macOS installation. macOS
+# does not expose the default-browser selection through `defaults write`.
+
+# Prefer tabs only when applications are in full screen
+defaults write NSGlobalDomain AppleWindowTabbingMode -string "fullscreen"
+
+# Save changes automatically and close windows when quitting applications
+defaults write NSGlobalDomain NSCloseAlwaysConfirmsChanges -bool false
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
+
+# Enable window tiling gestures without margins
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool true
+defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool true
+defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool true
+defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+
+###############################################################################
+# Mission Control                                                             #
+###############################################################################
+
+# Rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool true
+
+# Switch to the Space containing an application's open windows
+defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool true
+
+# Keep application windows separate in Mission Control
+defaults write com.apple.dock expose-group-apps -bool false
+
+# Give each display its own Spaces
+defaults write com.apple.spaces spans-displays -bool false
+
+# Enter Mission Control by dragging a window to the top of the screen
+defaults write com.apple.dock enterMissionControlByTopWindowDrag -bool true
 
 # Hot corners
 # Possible values:
@@ -267,6 +411,26 @@ defaults write com.apple.ActivityMonitor ShowCategory -int 100
 
 # Disable in-app rating requests from apps downloaded from the App Store.
 defaults write com.apple.appstore InAppReviewEnabled -int 0
+
+###############################################################################
+# Analytics                                                                   #
+###############################################################################
+
+# Do not share Siri, Dictation, or assistive voice recordings with Apple
+defaults write com.apple.assistant.support "Siri Data Sharing Opt-In Status" -int 2
+defaults write com.apple.SubmitDiagInfo improveAssistiveVoiceFeatures -bool false
+
+# The remaining analytics preferences are stored in a system-owned plist.
+if [[ "$RUN_AS_ROOT" = true ]]; then
+  defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory.plist" \
+    AutoSubmit -bool false
+  defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory.plist" \
+    ThirdPartyDataSubmit -bool false
+fi
+
+# Keyboard backlight, iCloud Analytics, Location Services system services,
+# input-source lists, and hardware scroll/spring sliders are managed by macOS
+# hardware, account, or privacy services and are not safely portable defaults.
 
 ###############################################################################
 # Kill/restart affected applications                                          #

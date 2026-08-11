@@ -153,6 +153,10 @@ apply_macos_configuration() {
   if [[ $(sudo systemsetup -getrestartfreeze) != *": On" ]]; then
     sudo systemsetup -setrestartfreeze on
   fi
+  sudo defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory.plist" \
+    AutoSubmit -bool false
+  sudo defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory.plist" \
+    ThirdPartyDataSubmit -bool false
   sudo defaults delete /.Spotlight-V100/VolumeConfiguration Exclusions 2>/dev/null || true
   printf "macOS configuration applied. Restart your Mac to apply all settings.\n"
 }
